@@ -1,0 +1,75 @@
+<!DOCTYPEDOCTYPE html>
+<html>
+<head>
+    <title>CORS Profile</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Profile Details</h1>
+
+    <button onclick="getProfile()">Get Profile</button>
+
+    <div id="result"></div>
+
+    <script>
+        function getProfile() {
+            
+            fetch("http://localhost:8080/profile")
+                .then(response => response.json())
+                .then(data => {
+                    
+                    document.getElementById("result").innerHTML = `
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Email</th>
+                            </tr>
+                            <tr>
+                                <td>${data.name}</td>
+                                <td>${data.id}</td>
+                                <td>${data.email}</td>
+                            </tr>
+                        </table>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById("result").innerHTML =
+                    "Request failed: " + error;
+                });
+        }
+    </script>
+
+</body>
+</html>
